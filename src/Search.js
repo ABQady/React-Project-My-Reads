@@ -1,38 +1,46 @@
 import React, { Component } from "react"
-import BooksApp from "./App"
 import * as BooksAPI from './BooksAPI'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import Shelf from "./Shelf"
 
 class Search extends Component {
 
    static propTypes = {
-      books: PropTypes.array.isRequired
+      books: PropTypes.any.isRequired
    }
+
    state = {
       query: '',
-      apiResult: []
+      apiResult: [],
+      error: false
    }
 
    updateQuery = (query) => {
       this.setState(() => ({
-         query: query.trim()
+         query
       }))
    }
 
-   clearQuery = () => {
-      this.updateQuery('')
+   performSearch = event => {
+      const query = event.target.value
+      this.updateQuery(query)
+
+      if (query.length > 0) {
+         BooksAPI.search(query.trim(), 20).then(books => {
+            books && (
+               books.length > 0
+                  ? this.setState({ apiResult: books, error: false })
+                  : this.setState({ apiResult: [], error: true })
+            )
+         })
+      } else this.setState({ apiResult: [], error: false, query: '' })
    }
 
    render() {
-      const { books } = this.props
-      const { query, apiResult } = this.state
+      const { query, apiResult, error } = this.state
+      //const { books } = this.props
 
-      const result = query === ''
-         ? apiResult
-         : apiResult.filter((c) => (
-            c.author.toLowerCase().includes(query.toLowerCase())
-         ))
       return (
          <div className="search-books">
             <div className="search-books-bar">
@@ -51,26 +59,24 @@ class Search extends Component {
                      type="text"
                      placeholder="Search by title or author"
                      value={query}
-                     onChange={(event) => {
-                        this.updateQuery(event.target.value)
-                        BooksAPI.search(query)
-                           .then((apiResult) => {
-                              this.setState(() => ({
-                                 apiResult
-                              }))
-                           })
-                     }}
+                     onChange={this.performSearch}
                   />
                </div>
             </div>
             <div className="search-books-results">
-               <div className='title'>
-                  <span> Now showing {result.length} of {books.length}</span>
-                  <button onClick={this.clearQuery}>Clear</button>
-               </div>
-               <ol className="books-grid"></ol>
+               {/* <div className="books-grid"> */}
+
+               {apiResult.length > 0 && query.length > 0 && (
+                  <div className="list-books-content">
+                     <h2 className="bookshelf-title">{`Search Result: ${apiResult.length}`}</h2>
+                     <Shelf books={this.state.apiResult} title={``} />
+                  </div>
+               )}
+
+               {error && (<h3>No books found ...</h3>)}
+
             </div>
-         </div>
+         </div >
       )
    }
 }

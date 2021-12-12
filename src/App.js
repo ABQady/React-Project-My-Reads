@@ -3,7 +3,6 @@ import * as BooksAPI from './BooksAPI'
 import './App.css'
 import ListBooks from './ListBooks'
 import Search from './Search'
-import { Link } from 'react-router-dom'
 import { Route, Routes } from 'react-router-dom'
 
 
@@ -15,10 +14,10 @@ class BooksApp extends React.Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    books: [],
-    wantToRead: [],
-    currentlyReading: [],
-    read: []
+    books: {},
+    wantToRead: {},
+    currentlyReading: {},
+    read: {}
   }
 
   componentDidMount() {
@@ -46,42 +45,43 @@ class BooksApp extends React.Component {
       })
   }
 
-  moveBook = (book, shelf) => {
-    this.setState((currentState) => ({
-      books: currentState.books.filter((c) => {
-        return c.id !== book.id
-      })
-    }))
+  // moveBook = (book, shelf) => {
+  //   this.setState((currentState) => ({
+  //     books: currentState.books.filter((c) => {
+  //       return c.id !== book.id
+  //     })
+  //   }))
 
-    shelf === 1 && this.setState((currentState) => ({
-      wantToRead: currentState.wantToRead.concat([book])
-    })) && BooksAPI.update(book.id, "wantToRead")
+  //   shelf === 1 && this.setState((currentState) => ({
+  //     wantToRead: currentState.wantToRead.concat([book])
+  //   })) && BooksAPI.update(book.id, "wantToRead")
 
-    shelf === 2 && this.setState((currentState) => ({
-      currentlyReading: currentState.currentlyReading.concat([book])
-    })) && BooksAPI.update(book.id, "currentlyReading")
+  //   shelf === 2 && this.setState((currentState) => ({
+  //     currentlyReading: currentState.currentlyReading.concat([book])
+  //   })) && BooksAPI.update(book.id, "currentlyReading")
 
-    shelf === 3 && this.setState((currentState) => ({
-      read: currentState.read.concat([book])
-    })) && BooksAPI.update(book.id, "read")
-  }
+  //   shelf === 3 && this.setState((currentState) => ({
+  //     read: currentState.read.concat([book])
+  //   })) && BooksAPI.update(book.id, "read")
+  // }
 
   render() {
+    const { books, wantToRead, currentlyReading, read } = this.state
     return (
       <div className="app">
         <div>
           <Routes>
             <Route exact path='/' element={
               < ListBooks
-                books={this.state.books}
-                wantToRead={this.state.wantToRead}
-                currentlyReading={this.state.currentlyReading}
-                read={this.state.read}
+                books={books}
+                wantToRead={wantToRead}
+                currentlyReading={currentlyReading}
+                read={read}
               />
             } />
 
             <Route path='/Search' element={
-              <Search books={this.state.books} />
+              <Search books={books} />
             } />
           </Routes>
         </div>

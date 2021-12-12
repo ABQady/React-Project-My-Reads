@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import Book from './Book'
+import Shelf from './Shelf'
 
 class ListBooks extends Component {
 
    static propTypes = {
-      books: PropTypes.array.isRequired,
-      wantToRead: PropTypes.array.isRequired,
-      currentlyReading: PropTypes.array.isRequired,
-      read: PropTypes.array.isRequired,
+      books: PropTypes.any.isRequired,
+      wantToRead: PropTypes.any.isRequired,
+      currentlyReading: PropTypes.any.isRequired,
+      read: PropTypes.any.isRequired,
    }
 
    render() {
@@ -21,73 +21,11 @@ class ListBooks extends Component {
                <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
-               <div>
-                  <div className="bookshelf">
-                     <h2 className="bookshelf-title">Currently Reading</h2>
-                     <div className="bookshelf-books">
-                        <ol className="books-grid">
-                           {currentlyReading.length > 0 && (
-                              currentlyReading.map((book) => (
-                                 <Book
-                                    book={book}
-                                 />
-                              ))
-                           )}
-                        </ol>
-                     </div>
-                  </div>
-               </div>
 
-               <div>
-                  <div className="bookshelf">
-                     <h2 className="bookshelf-title">Want To Read</h2>
-                     <div className="bookshelf-books">
-                        <ol className="books-grid">
-                           {wantToRead.length > 0 && (
-                              wantToRead.map((book) => (
-                                 <Book
-                                    book={book}
-                                 />
-                              ))
-                           )}
-                        </ol>
-                     </div>
-                  </div>
-               </div>
-
-               <div>
-                  <div className="bookshelf">
-                     <h2 className="bookshelf-title">All Books</h2>
-                     <div className="bookshelf-books">
-                        <ol className="books-grid">
-                           {books.length > 0 && (
-                              books.map((book) => (
-                                 <Book
-                                    book={book}
-                                 />
-                              ))
-                           )}
-                        </ol>
-                     </div>
-                  </div>
-               </div>
-
-               <div>
-                  <div className="bookshelf">
-                     <h2 className="bookshelf-title">Read</h2>
-                     <div className="bookshelf-books">
-                        <ol className="books-grid">
-                           {read.length > 0 && (
-                              read.map((book) => (
-                                 <Book
-                                    book={book}
-                                 />
-                              ))
-                           )}
-                        </ol>
-                     </div>
-                  </div>
-               </div>
+               <Shelf books={currentlyReading} title="Currently Reading" />
+               <Shelf books={wantToRead} title="Want To Read" />
+               <Shelf books={read} title="Read" />
+               <Shelf books={books} title="Library" />
 
                <Link to='/Search'>
                   <div className="open-search">
