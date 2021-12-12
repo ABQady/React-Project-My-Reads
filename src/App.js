@@ -14,10 +14,10 @@ class BooksApp extends React.Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    books: {},
-    wantToRead: {},
-    currentlyReading: {},
-    read: {}
+    books: [],
+    wantToRead: [],
+    currentlyReading: [],
+    read: []
   }
 
   componentDidMount() {
@@ -26,44 +26,41 @@ class BooksApp extends React.Component {
         this.setState(() => ({
           books
         }))
-        this.setState((currentState) => ({
-          wantToRead: currentState.books.filter((c) => {
-            return c.shelf === "wantToRead"
-          })
-        }))
-        this.setState((currentState) => ({
-          currentlyReading: currentState.books.filter((c) => {
-            return c.shelf === "currentlyReading"
-          })
-        }))
-        this.setState((currentState) => ({
-          read: currentState.books.filter((c) => {
-            return c.shelf === "read"
-          })
-        }))
-
+        this.refreshBooks()
       })
   }
 
-  // moveBook = (book, shelf) => {
-  //   this.setState((currentState) => ({
-  //     books: currentState.books.filter((c) => {
-  //       return c.id !== book.id
-  //     })
-  //   }))
+  refreshBooks() {
+    this.setState((currentState) => ({
+      wantToRead: currentState.books.filter((c) => {
+        return c.shelf === "wantToRead"
+      })
+    }))
+    this.setState((currentState) => ({
+      currentlyReading: currentState.books.filter((c) => {
+        return c.shelf === "currentlyReading"
+      })
+    }))
+    this.setState((currentState) => ({
+      read: currentState.books.filter((c) => {
+        return c.shelf === "read"
+      })
+    }))
+  }
 
-  //   shelf === 1 && this.setState((currentState) => ({
-  //     wantToRead: currentState.wantToRead.concat([book])
-  //   })) && BooksAPI.update(book.id, "wantToRead")
+  moveBook = (targetBook, shelf) => {
+    BooksAPI.update(targetBook, shelf)
+      .then(response => {
+        targetBook.shelf = shelf
 
-  //   shelf === 2 && this.setState((currentState) => ({
-  //     currentlyReading: currentState.currentlyReading.concat([book])
-  //   })) && BooksAPI.update(book.id, "currentlyReading")
-
-  //   shelf === 3 && this.setState((currentState) => ({
-  //     read: currentState.read.concat([book])
-  //   })) && BooksAPI.update(book.id, "read")
-  // }
+        this.setState((currentState) => ({
+          books: currentState.books
+            .filter(book => book.id !== targetBook.id)
+            .concat(targetBook)
+        }))
+        this.refreshBooks()
+      })
+  }
 
   render() {
     const { books, wantToRead, currentlyReading, read } = this.state
@@ -77,6 +74,7 @@ class BooksApp extends React.Component {
                 wantToRead={wantToRead}
                 currentlyReading={currentlyReading}
                 read={read}
+                moveBook={this.moveBook}
               />
             } />
 

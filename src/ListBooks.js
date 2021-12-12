@@ -10,10 +10,11 @@ class ListBooks extends Component {
       wantToRead: PropTypes.any.isRequired,
       currentlyReading: PropTypes.any.isRequired,
       read: PropTypes.any.isRequired,
+      moveBook: PropTypes.func.isRequired
    }
 
    render() {
-      const { books, wantToRead, currentlyReading, read } = this.props
+      const { books, wantToRead, currentlyReading, read, moveBook } = this.props
 
       return (
          <div className="list-books">
@@ -22,10 +23,10 @@ class ListBooks extends Component {
             </div>
             <div className="list-books-content">
 
-               <Shelf books={currentlyReading} title="Currently Reading" />
-               <Shelf books={wantToRead} title="Want To Read" />
-               <Shelf books={read} title="Read" />
-               <Shelf books={books} title="Library" />
+               <Shelf books={currentlyReading} title="Currently Reading" moveBook={moveBook} />
+               <Shelf books={wantToRead} title="Want To Read" moveBook={moveBook} />
+               <Shelf books={read} title="Read" moveBook={moveBook} />
+               <Shelf books={books} title="Library" moveBook={moveBook} />
 
                <Link to='/Search'>
                   <div className="open-search">

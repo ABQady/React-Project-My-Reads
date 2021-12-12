@@ -7,7 +7,8 @@ import Shelf from "./Shelf"
 class Search extends Component {
 
    static propTypes = {
-      books: PropTypes.any.isRequired
+      books: PropTypes.array.isRequired,
+      moveBook: PropTypes.func.isRequired
    }
 
    state = {
@@ -39,7 +40,7 @@ class Search extends Component {
 
    render() {
       const { query, apiResult, error } = this.state
-      //const { books } = this.props
+      const { books, moveBook } = this.props
 
       return (
          <div className="search-books">
@@ -69,7 +70,7 @@ class Search extends Component {
                {apiResult.length > 0 && query.length > 0 && (
                   <div className="list-books-content">
                      <h2 className="bookshelf-title">{`Search Result: ${apiResult.length}`}</h2>
-                     <Shelf books={this.state.apiResult} title={``} />
+                     <Shelf books={this.state.apiResult} title={``} moveBook={moveBook} />
                   </div>
                )}
 
