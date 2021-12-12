@@ -24,6 +24,8 @@ class Book extends Component {
          book.imageLinks && book.imageLinks.thumbnail
             ? book.imageLinks.thumbnail
             : "";
+      const title = book.title ? book.title : "No title";
+      const authors = book.authors ? book.authors : "No authors"
 
       return (
 
@@ -40,8 +42,8 @@ class Book extends Component {
                   </select>
                </div>
             </div>
-            <div className="book-title">{book.title}</div>
-            <div className="book-authors">{book.authors}</div>
+            <div className="book-title">{title}</div>
+            <div className="book-authors">{authors}</div>
          </div>
 
 
