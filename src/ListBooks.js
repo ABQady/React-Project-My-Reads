@@ -26,11 +26,13 @@ class ListBooks extends Component {
                      <h2 className="bookshelf-title">Currently Reading</h2>
                      <div className="bookshelf-books">
                         <ol className="books-grid">
-                           {currentlyReading.map((book) => (
-                              <Book
-                                 book={book}
-                              />
-                           ))}
+                           {currentlyReading.length > 0 && (
+                              currentlyReading.map((book) => (
+                                 <Book
+                                    book={book}
+                                 />
+                              ))
+                           )}
                         </ol>
                      </div>
                   </div>
@@ -41,11 +43,13 @@ class ListBooks extends Component {
                      <h2 className="bookshelf-title">Want To Read</h2>
                      <div className="bookshelf-books">
                         <ol className="books-grid">
-                           {wantToRead.map((book) => (
-                              <Book
-                                 book={book}
-                              />
-                           ))}
+                           {wantToRead.length > 0 && (
+                              wantToRead.map((book) => (
+                                 <Book
+                                    book={book}
+                                 />
+                              ))
+                           )}
                         </ol>
                      </div>
                   </div>
@@ -53,14 +57,16 @@ class ListBooks extends Component {
 
                <div>
                   <div className="bookshelf">
-                     <h2 className="bookshelf-title">Library</h2>
+                     <h2 className="bookshelf-title">All Books</h2>
                      <div className="bookshelf-books">
                         <ol className="books-grid">
-                           {books.map((book) => (
-                              <Book
-                                 book={book}
-                              />
-                           ))}
+                           {books.length > 0 && (
+                              books.map((book) => (
+                                 <Book
+                                    book={book}
+                                 />
+                              ))
+                           )}
                         </ol>
                      </div>
                   </div>
@@ -71,11 +77,13 @@ class ListBooks extends Component {
                      <h2 className="bookshelf-title">Read</h2>
                      <div className="bookshelf-books">
                         <ol className="books-grid">
-                           {read.map((book) => (
-                              <Book
-                                 book={book}
-                              />
-                           ))}
+                           {read.length > 0 && (
+                              read.map((book) => (
+                                 <Book
+                                    book={book}
+                                 />
+                              ))
+                           )}
                         </ol>
                      </div>
                   </div>

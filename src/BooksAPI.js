@@ -12,16 +12,19 @@ const headers = {
   'Authorization': token
 }
 
+//Test: https://reactnd-books-api.udacity.com/books/nggnmAEACAAJ
 export const get = (bookId) =>
   fetch(`${api}/books/${bookId}`, { headers })
     .then(res => res.json())
     .then(data => data.book)
 
+//Test: https://reactnd-books-api.udacity.com/books
 export const getAll = () =>
   fetch(`${api}/books`, { headers })
     .then(res => res.json())
     .then(data => data.books)
 
+//Test: https://reactnd-books-api.udacity.com/books/nggnmAEACAAJ
 export const update = (book, shelf) =>
   fetch(`${api}/books/${book.id}`, {
     method: 'PUT',
@@ -32,6 +35,7 @@ export const update = (book, shelf) =>
     body: JSON.stringify({ shelf })
   }).then(res => res.json())
 
+//Test: https://reactnd-books-api.udacity.com/search
 export const search = (query) =>
   fetch(`${api}/search`, {
     method: 'POST',

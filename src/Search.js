@@ -2,12 +2,16 @@ import React, { Component } from "react"
 import BooksApp from "./App"
 import * as BooksAPI from './BooksAPI'
 import { Link } from 'react-router-dom'
-
+import PropTypes from 'prop-types'
 
 class Search extends Component {
 
+   static propTypes = {
+      books: PropTypes.array.isRequired
+   }
    state = {
-      query: ''
+      query: '',
+      apiResult: []
    }
 
    updateQuery = (query) => {
@@ -21,8 +25,14 @@ class Search extends Component {
    }
 
    render() {
-      const { query } = this.state
+      const { books } = this.props
+      const { query, apiResult } = this.state
 
+      const result = query === ''
+         ? apiResult
+         : apiResult.filter((c) => (
+            c.author.toLowerCase().includes(query.toLowerCase())
+         ))
       return (
          <div className="search-books">
             <div className="search-books-bar">
@@ -44,13 +54,18 @@ class Search extends Component {
                      onChange={(event) => {
                         this.updateQuery(event.target.value)
                         BooksAPI.search(query)
+                           .then((apiResult) => {
+                              this.setState(() => ({
+                                 apiResult
+                              }))
+                           })
                      }}
                   />
                </div>
             </div>
             <div className="search-books-results">
                <div className='title'>
-                  <span> Now showing { } of { }</span>
+                  <span> Now showing {result.length} of {books.length}</span>
                   <button onClick={this.clearQuery}>Clear</button>
                </div>
                <ol className="books-grid"></ol>

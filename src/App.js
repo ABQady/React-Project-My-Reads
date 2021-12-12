@@ -27,6 +27,22 @@ class BooksApp extends React.Component {
         this.setState(() => ({
           books
         }))
+        this.setState((currentState) => ({
+          wantToRead: currentState.books.filter((c) => {
+            return c.shelf === "wantToRead"
+          })
+        }))
+        this.setState((currentState) => ({
+          currentlyReading: currentState.books.filter((c) => {
+            return c.shelf === "currentlyReading"
+          })
+        }))
+        this.setState((currentState) => ({
+          read: currentState.books.filter((c) => {
+            return c.shelf === "read"
+          })
+        }))
+
       })
   }
 
@@ -50,14 +66,7 @@ class BooksApp extends React.Component {
     })) && BooksAPI.update(book.id, "read")
   }
 
-  updateQuery = (query) => {
-    this.setState(() => ({
-      query: query.trim()
-    }))
-  }
   render() {
-    const { query } = this.state
-
     return (
       <div className="app">
         <div>
@@ -72,7 +81,7 @@ class BooksApp extends React.Component {
             } />
 
             <Route path='/Search' element={
-              <Search />
+              <Search books={this.state.books} />
             } />
           </Routes>
         </div>
