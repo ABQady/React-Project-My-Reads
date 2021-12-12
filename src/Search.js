@@ -1,4 +1,8 @@
 import React, { Component } from "react"
+import BooksApp from "./App"
+import * as BooksAPI from './BooksAPI'
+import { Link } from 'react-router-dom'
+
 
 class Search extends Component {
 
@@ -6,12 +10,23 @@ class Search extends Component {
       query: ''
    }
 
+   updateQuery = (query) => {
+      this.setState(() => ({
+         query: query.trim()
+      }))
+   }
+
+   clearQuery = () => {
+      this.updateQuery('')
+   }
+
    render() {
       const { query } = this.state
+
       return (
          <div className="search-books">
             <div className="search-books-bar">
-               <button className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</button>
+               <Link className="close-search" to="/">Close</Link>
                <div className="search-books-input-wrapper">
                   {/*
                   NOTES: The search from BooksAPI is limited to a particular set of search terms.
@@ -26,12 +41,18 @@ class Search extends Component {
                      type="text"
                      placeholder="Search by title or author"
                      value={query}
-                     onChange={(event) => this.updateQuery(event.target.value)}
+                     onChange={(event) => {
+                        this.updateQuery(event.target.value)
+                        BooksAPI.search(query)
+                     }}
                   />
-
                </div>
             </div>
             <div className="search-books-results">
+               <div className='title'>
+                  <span> Now showing { } of { }</span>
+                  <button onClick={this.clearQuery}>Clear</button>
+               </div>
                <ol className="books-grid"></ol>
             </div>
          </div>

@@ -81,9 +81,13 @@ class ListBooks extends Component {
                   </div>
                </div>
 
+               <Link to='/Search'>
+                  <div className="open-search">
+                     <button></button>
+                  </div>
+               </Link>
 
             </div>
-
          </div>
       )
    }
