@@ -22,21 +22,19 @@ class ListBooks extends Component {
                <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
-
                <Shelf books={currentlyReading} title="Currently Reading" moveBook={moveBook} />
                <Shelf books={wantToRead} title="Want To Read" moveBook={moveBook} />
                <Shelf books={read} title="Read" moveBook={moveBook} />
                <Shelf books={books} title="Library" moveBook={moveBook} />
-
                <Link to='/Search'>
                   <div className="open-search">
                      <button></button>
                   </div>
                </Link>
-
             </div>
          </div>
       )
    }
 }
+
 export default ListBooks

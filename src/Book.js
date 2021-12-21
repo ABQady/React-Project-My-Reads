@@ -31,19 +31,14 @@ class Book extends Component {
       const authors = book.authors ? book.authors : "No authors"
 
       return (
-
          <div className="book">
             <div className="book-top">
                <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${thumbnail})` }}></div>
-
                <Control book={book} books={books} moveBook={moveBook} />
-
             </div>
             <div className="book-title">{title}</div>
             <div className="book-authors">{authors}</div>
          </div>
-
-
       )
    }
 }

@@ -12,6 +12,7 @@ class Control extends Component {
    updateShelf = event => {
       this.props.moveBook(this.props.book, event.target.value)
    }
+
    render() {
       const { book, books } = this.props
 
@@ -23,7 +24,6 @@ class Control extends Component {
             break;
          }
       }
-
 
       return (
          <div className="book-shelf-changer">
